@@ -7,9 +7,6 @@ import com.imconsulting.action.ActionCustomerPanel;
 import com.imconsulting.action.ActionEmployeePanel;
 import com.imconsulting.channel.Channel;
 import com.imconsulting.company.Company;
-import com.imconsulting.employee.Employee;
-import com.imconsulting.employee.EmployeeEditPanel;
-import com.imconsulting.employee.privilege.Privilege;
 import com.imconsulting.empstatus.EmpStatus;
 import com.imconsulting.products.Products;
 import com.imconsulting.profession.Profession;
@@ -17,8 +14,6 @@ import com.imconsulting.response.Response;
 import jakarta.persistence.*;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -119,7 +114,19 @@ public class CustomerPanel extends VBox {
         TableColumn<Customer, String> dateColumn = new TableColumn<>("Datum registracije");
         dateColumn.setCellValueFactory(new PropertyValueFactory<>("dateRegisty"));
 
-        customerTableView.getColumns().addAll(idColumn, nameColumn, surnameColumn, birthdayColumn, addressColumn, mobileColumn, emailColumn, empStatusColumn, professionColumn, companyColumn, employeeColumn, dateColumn);
+        customerTableView.getColumns().addAll(
+                idColumn,
+                nameColumn,
+                surnameColumn,
+                birthdayColumn,
+                addressColumn,
+                mobileColumn,
+                emailColumn,
+                empStatusColumn,
+                professionColumn,
+                companyColumn,
+                employeeColumn,
+                dateColumn);
     }
 
     private BorderPane setupButtonPanel() {
@@ -143,39 +150,56 @@ public class CustomerPanel extends VBox {
         //UNOS TEXT FIELDA
         nameTextField.setPromptText("Enter name...");
         nameTextField.setMaxWidth(200);
+
         surnameTextField.setPromptText("Enter surname...");
         surnameTextField.setMaxWidth(200);
+
         addressTextField.setPromptText("Enter address...");
         addressTextField.setMaxWidth(200);
+
         mobileTextField.setPromptText("Enter mobile...");
         mobileTextField.setMaxWidth(200);
+
         emailTextField.setPromptText("Enter email...");
         emailTextField.setMaxWidth(200);
+
         companyComboBox.setPromptText("Enter company...");
         companyComboBox.setMaxWidth(200);
+
         professionComboBox.setPromptText("Enter profession...");
         professionComboBox.setMaxWidth(200);
+
         empStatusComboBox.setPromptText("Enter status...");
         empStatusComboBox.setMaxWidth(200);
+
         GridPane gridPane = new GridPane();
         gridPane.setHgap(10);
         gridPane.setVgap(10);
+
         gridPane.add(nameLabel, 0, 0);
         gridPane.add(nameTextField, 0, 1);
+
         gridPane.add(surnameLabel, 1, 0);
         gridPane.add(surnameTextField, 1, 1);
+
         gridPane.add(addressLabel, 2, 0);
         gridPane.add(addressTextField, 2, 1);
+
         gridPane.add(mobileLabel, 3, 0);
         gridPane.add(mobileTextField, 3, 1);
+
         gridPane.add(emailLabel, 4, 0);
         gridPane.add(emailTextField, 4, 1);
+
         gridPane.add(birthdayLabel, 5, 0);
         gridPane.add(birthdayPicker, 5, 1);
+
         gridPane.add(empStatusLabel, 0, 2);
         gridPane.add(empStatusComboBox, 0, 3);
+
         gridPane.add(professionLabel, 1, 2);
         gridPane.add(professionComboBox, 1, 3);
+
         gridPane.add(companyLabel, 2, 2);
         gridPane.add(companyComboBox, 2, 3);
 
@@ -217,7 +241,7 @@ public class CustomerPanel extends VBox {
             dialog.setHeight(150);
             dialog.getDialogPane().getButtonTypes().addAll(ButtonType.CANCEL);
         } else {
-            Controller.setSelctedCustomer(customerTableView.getSelectionModel().getSelectedItem());
+            Controller.setSelectedCustomer(customerTableView.getSelectionModel().getSelectedItem());
             ActionCustomerPanel actionCustomerPanel = new ActionCustomerPanel();
             Scene scene = new Scene(actionCustomerPanel);
             Controller.instance().getMainStage().setScene(scene);
@@ -227,9 +251,9 @@ public class CustomerPanel extends VBox {
 
     private void onCLickEmpStatusComboBox(ActionEvent actionEvent) {
         if (!empStatusComboBox.getValue().getName().equals("Zaposlen")) {
-            companyComboBox.setDisable(true);
+            //companyComboBox.setDisable(true);
         } else {
-            companyComboBox.setDisable(false);
+            //companyComboBox.setDisable(false);
         }
     }
 

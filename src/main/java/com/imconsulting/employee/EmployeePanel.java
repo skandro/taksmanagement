@@ -2,6 +2,7 @@ package com.imconsulting.employee;
 
 
 import com.imconsulting.UI.Controller;
+import com.imconsulting.UI.paneli.PlainPassHashGenerator;
 import com.imconsulting.UI.paneli.StartPanel;
 import com.imconsulting.employee.privilege.Privilege;
 import jakarta.persistence.*;
@@ -217,7 +218,8 @@ public class EmployeePanel extends VBox {
                     employee.setName(nameTextField.getText());
                     employee.setSurname(surnameTextField.getText());
                     employee.setUsername(usernameTextField.getText());
-                    employee.setPassword(passwordField.getText());
+                    String hashedPassword = new PlainPassHashGenerator().generateHashedPassword(passwordField.getText());
+                    employee.setPassword(hashedPassword);
                     if (adminRadioButton.isSelected()) {
                         Privilege privilege = entityManager.find(Privilege.class, 1);
                         employee.setPrivilege(privilege);

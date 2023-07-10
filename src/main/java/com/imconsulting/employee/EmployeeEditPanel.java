@@ -1,6 +1,7 @@
 package com.imconsulting.employee;
 
 import com.imconsulting.UI.Controller;
+import com.imconsulting.UI.paneli.PlainPassHashGenerator;
 import com.imconsulting.employee.privilege.Privilege;
 import jakarta.persistence.*;
 import javafx.collections.ObservableList;
@@ -113,7 +114,9 @@ public class EmployeeEditPanel extends GridPane {
             editEmployee.setName(nameTextField.getText());
             editEmployee.setSurname(surnameTextField.getText());
             editEmployee.setUsername(usernameTextField.getText());
-            editEmployee.setPassword(passwordField.getText());
+            String plainPassword = passwordField.getText();
+            String hashedPassword = new PlainPassHashGenerator().generateHashedPassword(plainPassword);
+            editEmployee.setPassword(hashedPassword);
             if (adminRadioButton.isSelected()) {
                 Privilege privilege = entityManager.find(Privilege.class, 1);
                 editEmployee.setPrivilege(privilege);

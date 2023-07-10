@@ -20,7 +20,7 @@ import java.time.LocalDate;
 
 public class StartPanel extends VBox {
     private final Label currentEmployeeLabel = new Label();
-    private final Label welcomeLabel = new Label("WELCOME");
+    private final Label welcomeLabel = new Label("Welcome to the application - task management");
     private final Button customersButton = new Button("Customers");
     private final Button employeesButton = new Button("Employees");
 

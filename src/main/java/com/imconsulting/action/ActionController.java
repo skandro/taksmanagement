@@ -1,7 +1,6 @@
 package com.imconsulting.action;
 
 import com.imconsulting.UI.Controller;
-import com.imconsulting.customer.Customer;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
@@ -34,7 +33,7 @@ public class ActionController {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         entityManager.getTransaction().begin();
         Query query = entityManager.createNamedQuery("Action.findByCustomer");
-        query.setParameter("customer", Controller.getSelctedCustomer());
+        query.setParameter("customer", Controller.getSelectedCustomer());
         actions = query.getResultList();
         entityManager.getTransaction().commit();
 

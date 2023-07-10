@@ -34,7 +34,7 @@ public class ActionCustomerPanel extends VBox {
     private TableView<Action> actionTableView = new TableView<>();
     private ActionController actionController = new ActionController();
     private final Button addActionButton = new Button("Add Action");
-    private final Button deleteActionButton = new Button("Delete Customer");
+    private final Button deleteActionButton = new Button("Delete Action");
     private final CheckBox deleteCheckBox = new CheckBox("Delete");
     private final Label responseLabel = new Label("Odgovor: ");
     private final ComboBox<Response> responseComboBox = new ComboBox<>();
@@ -49,7 +49,7 @@ public class ActionCustomerPanel extends VBox {
         setSpacing(10);
         setPadding(new Insets(10));
 
-        currentCustomerLabel.setText("Kupac: " + Controller.getSelctedCustomer().getName() + ", " + Controller.getSelctedCustomer().getSurname());
+        currentCustomerLabel.setText("Kupac: " + Controller.getSelectedCustomer().getName() + ", " + Controller.getSelectedCustomer().getSurname());
         currentEmployeeLabel.setText(Controller.getCurrentEmployee().getName() + ", " + Controller.getCurrentEmployee().getSurname());
         BorderPane backButtonAndEmployeePanel = new BorderPane(currentCustomerLabel, null, currentEmployeeLabel, null, backButton);
 
@@ -151,7 +151,7 @@ public class ActionCustomerPanel extends VBox {
         } else {
             Action action = new Action();
             action.setDate(LocalDate.now());
-            action.setCustomer(Controller.getSelctedCustomer());
+            action.setCustomer(Controller.getSelectedCustomer());
             action.setEmployee(Controller.getCurrentEmployee());
             action.setChannel(channelComboBox.getValue());
             action.setResponse(responseComboBox.getValue());

@@ -21,22 +21,31 @@ public class CustomerEditPanel extends GridPane {
 
     private final Label nameLabel = new Label("Name: ");
     private final TextField nameTextField = new TextField();
+
     private final Label surnameLabel = new Label("Surname: ");
     private final TextField surnameTextField = new TextField();
+
     private final Label birthdayLabel = new Label("Birthday: ");
     private final DatePicker birthdayPicker = new DatePicker();
+
     private final Label addressLabel = new Label("Adress: ");
     private final TextField addressTextField = new TextField();
+
     private final Label mobileLabel = new Label("Mobile: ");
     private final TextField mobileTextField = new TextField();
+
     private final Label emailLabel = new Label("Email: ");
     private final TextField emailTextField = new TextField();
+
     private final Label empStatusLabel = new Label("Status: ");
     private final ComboBox<EmpStatus> empStatusComboBox = new ComboBox<>();
+
     private final Label professionLabel = new Label("Profession: ");
     private final ComboBox<Profession> professionComboBox = new ComboBox<>();
+
     private final Label companyLabel = new Label("Company: ");
     private final ComboBox<Company> companyComboBox = new ComboBox<>();
+
     private final Button saveCustomerButton = new Button("SAVE");
     private Customer customer;
 
@@ -50,22 +59,33 @@ public class CustomerEditPanel extends GridPane {
         //forma za editovanje
         nameTextField.setMaxWidth(200);
         nameTextField.setText(customer.getName());
+
         surnameTextField.setMaxWidth(200);
         surnameTextField.setText(customer.getSurname());
+
         addressTextField.setMaxWidth(200);
         addressTextField.setText(customer.getAddress());
+
         mobileTextField.setMaxWidth(200);
         mobileTextField.setText(customer.getMobile());
+
         emailTextField.setMaxWidth(200);
         emailTextField.setText(customer.getEmail());
+
         birthdayPicker.setValue(customer.getBirthday());
+
         companyComboBox.setMaxWidth(200);
+
         professionComboBox.setMaxWidth(200);
+
         empStatusComboBox.setMaxWidth(200);
+
         //UNOS CHECK BOXA
+
         ObservableList<EmpStatus> empStatusObservableList = empStatusComboBox.getItems();
         ObservableList<Profession> professionObservableList = professionComboBox.getItems();
         ObservableList<Company> companyObservableList = companyComboBox.getItems();
+
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory(Controller.PU_NAME);
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         entityManager.getTransaction().begin();
@@ -76,13 +96,16 @@ public class CustomerEditPanel extends GridPane {
         query = entityManager.createNamedQuery("Company.findAll");
         List<Company> companyList = query.getResultList();
         entityManager.getTransaction().commit();
+
         empStatusObservableList.addAll(empStatusList);
         empStatusComboBox.setOnAction(this::onCLickEmpStatusComboBox);
+
         professionObservableList.addAll(professionList);
         companyObservableList.addAll(companyList);
 
         empStatusComboBox.setValue(customer.getEmpStatus());
         professionComboBox.setValue(customer.getProfession());
+
         companyComboBox.setValue(customer.getCompany());
 
         add(nameLabel, 0, 0);
@@ -106,9 +129,17 @@ public class CustomerEditPanel extends GridPane {
 
         add(saveCustomerButton, 0, 9);
         saveCustomerButton.setOnAction(this::onClickSaveCustomerButton);
-        if (!empStatusComboBox.getValue().getName().equals("Zaposlen")) {
-            companyComboBox.setDisable(true);
-        }
+
+        /**        if (!empStatusComboBox.getValue().getName().equals("Zaposlen")) {
+         companyComboBox.setDisable(true);
+         } else {
+         companyComboBox.setDisable(false);
+         }
+         *
+         */
+
+
+
     }
 
     private void onCLickEmpStatusComboBox(ActionEvent actionEvent) {

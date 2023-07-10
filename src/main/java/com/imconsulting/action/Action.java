@@ -13,7 +13,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
-@Table(name = "actions", catalog = "project")
+@Table(name = "actions", catalog = "project")  // action je naziv tabele u bazi, project je ime baze
 @NamedQueries(value = {
         @NamedQuery(name = "Action.findAll", query = "SELECT a FROM Action a"),
         @NamedQuery(name = "Action.findByEmployee", query = "SELECT a FROM Action a WHERE a.employee = :employee"),

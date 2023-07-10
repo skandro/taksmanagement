@@ -20,9 +20,9 @@ public class EntryPointOfApplication extends Application {
         stage.setScene(scene);
         stage.setTitle("IM-Consulting");
         stage.show();
+        stage.setResizable(false); // nema mogućnost proširivanja screena
         //stage.setHeight(500); //visina
         //stage.setWidth(500); //sirina
-        stage.setResizable(false); // nema mogućnost proširivanja screena
-        stage.centerOnScreen();
+        //stage.centerOnScreen();
     }
 }

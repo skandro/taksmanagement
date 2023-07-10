@@ -2,12 +2,9 @@ package com.imconsulting.employee;
 
 import com.imconsulting.action.Action;
 import com.imconsulting.customer.Customer;
-
-
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
-
 import com.imconsulting.employee.privilege.Privilege;
 import jakarta.persistence.*;
 

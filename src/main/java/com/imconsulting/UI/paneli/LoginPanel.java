@@ -8,11 +8,18 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.text.Font;
+
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
+import java.math.BigInteger;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.security.spec.InvalidKeySpecException;
 
 
 public class LoginPanel extends GridPane {
@@ -25,6 +32,7 @@ public class LoginPanel extends GridPane {
     private final Button cancelButton = new Button("Odustani");
     private final Label messageLabel = new Label();
     private final Image image = new Image("logo.png");
+    private final ProgressBar progressBar = new ProgressBar();
 
 
     public LoginPanel() {
@@ -43,7 +51,8 @@ public class LoginPanel extends GridPane {
         ImageView imageView = new ImageView(image);
         imageView.setFitHeight(50);
         imageView.setFitWidth(100);
-        add(imageView, 0,3);
+        add(imageView, 0, 3);
+
 
         //FlowPane
         FlowPane flowPane = new FlowPane();
@@ -53,14 +62,21 @@ public class LoginPanel extends GridPane {
         flowPane.setHgap(5);
         flowPane.getChildren().addAll(loginButton, cancelButton);
         add(flowPane, 1, 2);
+
         //message
         add(messageLabel, 1, 3);
+
+        add(progressBar, 0, 4);
+        progressBar.setVisible(false);
+
     }
+
 
     private void onCancelButtonClick(ActionEvent event) {
         usernameTextField.clear();
         passwordField.clear();
         messageLabel.setText("");
+        progressBar.setVisible(false);
     }
 
 
@@ -68,12 +84,27 @@ public class LoginPanel extends GridPane {
 
         String username = usernameTextField.getText();
         String password = passwordField.getText();
+
         if (username == null || username.isEmpty() || password == null || password.isEmpty()) {
             messageLabel.setText("Nije dozvoljeno prazan unos korisničkog imena ili lozinke");
             return;
         }
+
         login(username, password);
+
     }
+
+    public static void main(String[] args)  throws NoSuchAlgorithmException, InvalidKeySpecException {
+        String originalPassword = "ivica123";
+        PlainPassHashGenerator hashGenerator = new PlainPassHashGenerator();
+        String generatedSecuredPasswordHash = hashGenerator.generateHashedPassword(originalPassword);
+        System.out.println(generatedSecuredPasswordHash);
+
+        PasswordValidator passwordValidator = new PasswordValidator();
+        System.out.println(passwordValidator.verifyPassword(originalPassword));
+    }
+
+
 
     private void login(String username, String password) {
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory(Controller.PU_NAME);
@@ -82,17 +113,21 @@ public class LoginPanel extends GridPane {
         query.setParameter("username", username);
         try {
             Employee employee = (Employee) query.getSingleResult();
-            if (employee != null && password.equals(employee.getPassword())) {
+            PasswordValidator passwordValidator = new PasswordValidator();
+            String employeeStoredPassword = employee.getPassword();
+            if (employee != null && passwordValidator.validatePassword(password, employeeStoredPassword)) {
                 Controller.setCurrentEmployee(employee);
                 Scene scene = new Scene(new StartPanel());
                 Controller.instance().getMainStage().setScene(scene);
                 Controller.instance().getMainStage().setTitle("Pocetna");
             } else {
                 messageLabel.setText("Neispravna lozinka.");
+
             }
         } catch (NoResultException e) {
             messageLabel.setText("Nesipravno korisničko ime.");
             System.err.println(e.getMessage());
+
         }
     }
 }
